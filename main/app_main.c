@@ -9,7 +9,22 @@
 
 #include "esp_at.h"
 #include "esp_at_init.h"
+#include "driver/gpio.h"
 
+#define GPIO_OUTPUT_IO_0    0
+#define GPIO_OUTPUT_IO_1    1
+#define GPIO_OUTPUT_IO_4    4
+#define GPIO_OUTPUT_IO_5    5
+#define GPIO_OUTPUT_PIN_SEL  ((1ULL<<GPIO_OUTPUT_IO_0) | (1ULL<<GPIO_OUTPUT_IO_1) | (1ULL<<GPIO_OUTPUT_IO_4) | (1ULL<<GPIO_OUTPUT_IO_5))
+/*
+ * Let's say, GPIO_OUTPUT_IO_0=18, GPIO_OUTPUT_IO_1=19
+ * In binary representation,
+ * 1ULL<<GPIO_OUTPUT_IO_0 is equal to 0000000000000000000001000000000000000000 and
+ * 1ULL<<GPIO_OUTPUT_IO_1 is equal to 0000000000000000000010000000000000000000
+ * 1ULL<<GPIO_OUTPUT_IO_4 is equal to 0000000000000000010000000000000000000000
+ * 1ULL<<GPIO_OUTPUT_IO_5 is equal to 0000000000000000100000000000000000000000
+ * GPIO_OUTPUT_PIN_SEL                0000000000000000110011000000000000000000
+ * */
 void app_main(void)
 {
 
@@ -29,6 +44,8 @@ void app_main(void)
     gpio_config(&io_conf);
     gpio_set_level(GPIO_OUTPUT_IO_0, 0);
     gpio_set_level(GPIO_OUTPUT_IO_1, 0);
+    gpio_set_level(GPIO_OUTPUT_IO_4, 1);
+    gpio_set_level(GPIO_OUTPUT_IO_5, 0);
     esp_at_main_preprocess();
 
     ESP_ERROR_CHECK(nvs_flash_init());
