@@ -42,7 +42,7 @@ void app_main(void)
     io_conf.pull_up_en = 0;
     //configure GPIO with the given settings
     gpio_config(&io_conf);
-    gpio_set_level(GPIO_OUTPUT_IO_0, 0);
+    gpio_set_level(GPIO_OUTPUT_IO_0, 1);
     gpio_set_level(GPIO_OUTPUT_IO_1, 0);
     gpio_set_level(GPIO_OUTPUT_IO_4, 1);
     gpio_set_level(GPIO_OUTPUT_IO_5, 0);
@@ -51,7 +51,7 @@ void app_main(void)
     ESP_ERROR_CHECK(nvs_flash_init());
     ESP_ERROR_CHECK(esp_at_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());
-    gpio_set_level(GPIO_OUTPUT_IO_0, 1);
+    
     esp_at_init();
     gpio_set_level(GPIO_OUTPUT_IO_1, 1);
 }
